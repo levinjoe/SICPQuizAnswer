@@ -1,0 +1,8 @@
+(define (e-D index)
+    (cond ((= 1 (remainder index 3))
+	   1)
+	  ((= 0 (remainder index 3))
+	   1)
+	  (else (* 2 (/ (+ index 1) 3)))))
+(define (calc-e k)
+    (+ 2 (cont-frac (lambda (i) 1.0) e-D k)))

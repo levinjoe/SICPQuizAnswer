@@ -1,0 +1,26 @@
+(define (prime-test n)
+    (define (prime-test-iter start end)
+	(if (> start end)
+	    true
+	    (if (fermat-test start)
+		(prime-test-iter (+ start 1) end)
+		false)))
+  (define (fermat-test a)
+      (= (expmod a (- n 1)) 1))
+  
+  (define (expmod base exp)
+      (cond ((= exp 0) 1)
+	      ((even? exp)
+		(square-with-check base (expmod base (/ exp 2))))
+	      (else
+	       (remainder (* base (expmod base (- exp 1)))
+			  n))))
+   (define (square-with-check base x)
+       (define (remainder-check base r)
+	   (if (and (= r 1)
+		    (not (= base 1))
+		    (not (= base (- n 1))))
+	       0
+	       r))
+     (remainder-check x (remainder (square x) n)))
+  (prime-test-iter 2 (- n 1)))
